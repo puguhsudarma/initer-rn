@@ -40,3 +40,4 @@ This initer RN still in development, just for automate daily new project init, t
 
 ## Author
 ***Reroet***
+***yayanartha*** https://github.com/yayanartha
