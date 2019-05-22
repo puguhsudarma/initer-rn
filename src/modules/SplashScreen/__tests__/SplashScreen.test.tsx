@@ -1,7 +1,7 @@
 import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
-import SplashScreen from '..//SplashScreen';
+import SplashScreen from '../SplashScreen';
 
 describe('SplashScreen', () => {
     it('Render splashscreen to match snapshot', () => {

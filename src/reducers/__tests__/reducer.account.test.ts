@@ -7,6 +7,7 @@ describe('Reducer: Account', () => {
             type: ACCOUNT_FAILED,
             payload: { error: { error: '', type: '' } },
         });
+
         expect(newState).toEqual({
             ...initialState,
             error: { error: '', type: '' },
