@@ -46,7 +46,7 @@ yarn add --dev husky lint-staged prettier tslint tslint-config-prettier tslint-p
 # touch src/reducers/index.ts
 
 # remove app.tsx and re write index.js
-rm -drvf __test__/
+rm -drvf __tests__/
 rm -v App.tsx
 rm -v index.js
 touch index.js
