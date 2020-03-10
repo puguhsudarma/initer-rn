@@ -1,10 +1,21 @@
 import { IAccountState } from '../types/account';
-import { ActionAccountType, LOGIN_SUCCESS, ACCOUNT_FAILED } from '../types/action.account';
+import { ActionAccountType, LOGIN_SUCCESS, ACCOUNT_FAILED, LOGOUT_SUCCESS } from '../actions/action.account';
+
+const profile = {
+    id: 0,
+    first_name: '',
+    last_name: '',
+    email: '',
+    mobile: '',
+};
 
 export const initialState: IAccountState = {
+    token_type: 'Bearer',
+    expires_in: 0,
     access_token: '',
-    profile: {},
+    refresh_token: '',
     isLoggedIn: false,
+    profile,
     error: {},
 };
 
@@ -13,12 +24,14 @@ export default (state = initialState, action: ActionAccountType): IAccountState 
         case LOGIN_SUCCESS:
             return {
                 ...state,
-                access_token: action.payload.access_token,
-                profile: {
-                    ...state.profile,
-                    ...action.payload.profile,
-                },
+                ...action.payload.accessToken,
                 isLoggedIn: true,
+            };
+
+        case LOGOUT_SUCCESS:
+            return {
+                ...state,
+                ...initialState,
             };
 
         case ACCOUNT_FAILED:

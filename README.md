@@ -1,43 +1,51 @@
-# INITER RN
-## Description
-New project? it's great to have a new project, but a boring start, is init project. To have the same configuration, dependency, logic, etc. But fresh from the NPM or other package manager. Introducing __Initer RN__ a new way to start a project RN. Just copy the `init.sh` file to your root project directory, and fire it with `./init.sh` command. It's already there the `src` directory, to put all your code.
+# :space_invader: React Native Template TypeScript
 
-## How to ?
-0. After init project with `react-native init yournameproject --template typescript`
-1. copy `init.sh` to your root project directory
-2. fire `./init.sh`command in your root project directory
-3. copy and replace (merge) the rest of all file, except `init.sh` to your project directory.
-4. copy and replace `script` object in `package.json` file
-```
-{
-	"start": "node node_modules/react-native/local-cli/cli.js start",
-	"build:ios": "react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'",
-	"bundle:ios": "react-native bundle --entry-file ./index.js --platform ios --bundle-output ios/main.jsbundle",
-	"android-staging": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug && cd ..",
-	"release-staging": "cd ./android && ./gradlew app:assembleRelease && cd ..",
-	"pretty": "prettier --semi true --single-quote --trailing-comma all --tab-width 4 --write 'src/**/*.{ts,tsx}'",
-	"precommit": "lint-staged",
-	"watchman-fix": "echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p",
-	"test": "jest"
-}
-```
-5.  copy and paste below `script` object in `package.json`
-```
-"lint-staged": {
-	"*.{ts,tsx}": [
-		"yarn pretty",
-		"git add"
-	]
-},
-```
-6. Link native dependency to iOS and Android
-	1. React-Native-Navigation (https://wix.github.io/react-native-navigation/#/docs/Installing)
-	2. @react-native-community/async-storage (https://github.com/react-native-community/react-native-async-storage/blob/master/docs/Linking.md) 
-7. And that's it, you got common dependency, RNN, redux, jest and enzyme testing, and linting code.
+<p>
+  <a href="https://travis-ci.org/react-native-community/react-native-template-typescript">
+    <img alt="Build Status" src="https://img.shields.io/travis/react-native-community/react-native-template-typescript.svg" target="_blank" />
+  </a>
+  <a href="https://github.com/react-native-community/react-native-template-typescript#readme">
+    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" target="_blank" />
+  </a>
+  <a href="https://github.com/react-native-community/react-native-template-typescript/graphs/commit-activity">
+    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" target="_blank" />
+  </a>
+  <a href="https://github.com/react-native-community/react-native-template-typescript/blob/master/LICENSE">
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" target="_blank" />
+  </a>
+</p>
 
-## Note
-This initer RN still in development, just for automate daily new project init, to reduce time init and focus to business logic.
+> Clean and minimalist React Native template for a quick start with TypeScript.
 
-## Author
-***Reroet***
-***yayanartha*** https://github.com/yayanartha
+## :star: Features
+
+- Elegant usage directly within the [React Native CLI](https://github.com/react-native-community/cli)
+- Consistent with the default React Native template
+- Minimal additional dependencies
+
+## :arrow_forward: Usage
+
+### Note on the legacy CLI
+There seems to be quite some confusion about the legacy CLI. This template only works with the new CLI. Make sure you have uninstalled the legacy `react-native-cli` first (`npm uninstall -g react-native-cli`), for the below command to work. If you wish to not use `npx`, you can also install the new CLI globally (`npm i -g @react-native-community/cli` or `yarn global add @react-native-community/cli`).
+
+Further information can be found here: https://github.com/react-native-community/cli#about
+
+### `react-native@0.61.0` or higher
+
+```sh
+npx react-native init MyApp --template react-native-template-typescript
+```
+
+### `react-native@0.60.x`
+
+```sh
+npx react-native init MyApp --template react-native-template-typescript@6.2.0
+```
+
+## :computer: Contributing
+
+Contributions are very welcome. Please check out the [contributing document](CONTRIBUTING.md).
+
+## :bookmark: License
+
+This project is [MIT](LICENSE) licensed.

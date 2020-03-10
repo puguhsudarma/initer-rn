@@ -1,22 +1,18 @@
-import { Alert } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-import registerScreens from './configs/registerScreens';
-import * as navigationControl from './configs/navigationControl';
+import registerScreens from './utils/registerScreens';
+import * as navigationControl from './utils/navigationControl';
 import { persistStore as persistStoreRaw } from 'redux-persist';
-import configureStore from './configs/configureStore';
+import configureStore from './utils/configureStore';
+import color from './constants/color';
+import configureAnimatable from './utils/configureAnimatable';
 
 /**
  * Wait till our store is persisted
  * @param {store} storeToPersist - The redux store to persist
  * @returns {Promise} - Promise that resolves when the store is rehydrated
  */
-const persistStore = (storeToPersist: any) => {
-    return new Promise((resolve: any) => {
-        persistStoreRaw(storeToPersist, undefined, () => {
-            resolve();
-        });
-    });
-};
+const persistStore = (storeToPersist: any): Promise<any> =>
+    new Promise((resolve) => persistStoreRaw(storeToPersist, undefined, resolve));
 
 /**
  * Set root screen for launch app for the first time
@@ -42,6 +38,10 @@ const setRootScreen = () => {
                 },
             },
         },
+        statusBar: {
+            backgroundColor: color.TURQUOISE,
+            style: 'light',
+        },
     });
 
     Navigation.setRoot({
@@ -59,6 +59,9 @@ const bootstrap = async () => {
         // disable yellow box
         console.disableYellowBox = true;
 
+        // init animatable configuration
+        configureAnimatable();
+
         // create the store
         const store = configureStore();
 
@@ -74,8 +77,6 @@ const bootstrap = async () => {
         if (__DEV__) {
             console.log('BOOTSTRAP: ', error);
         }
-
-        Alert.alert('Sorry', 'Calibrate with your phone, please restart application.');
     }
 };
 

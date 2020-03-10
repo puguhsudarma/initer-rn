@@ -1,37 +1,57 @@
-import { IProfile } from '../types/account';
-import { LOGIN, LOGIN_SUCCESS, ACCOUNT_FAILED, ActionAccountType } from '../types/action.account';
+import { IAccessToken } from '../types/account';
+import { IError } from '../types/responseApi';
+
+export const LOGIN = 'LOGIN';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+
+export const LOGOUT = 'LOGOUT';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+
+export const ACCOUNT_FAILED = 'ACCOUNT_FAILED';
 
 export const login = (
-    email: string,
+    mobile: string,
     password: string,
-    onSuccess?: () => void,
+    onSuccess?: (isChangePassword: boolean) => void,
     onFailed?: () => void,
-): ActionAccountType => ({
-    type: LOGIN,
+) => ({
+    type: LOGIN as typeof LOGIN,
     payload: {
-        body: {
-            email,
-            password,
-        },
+        mobile,
+        password,
         onSuccess,
         onFailed,
     },
 });
 
-export const loginSuccess = (access_token: string, profile: IProfile): ActionAccountType => ({
-    type: LOGIN_SUCCESS,
+export const loginSuccess = (accessToken: IAccessToken) => ({
+    type: LOGIN_SUCCESS as typeof LOGIN_SUCCESS,
     payload: {
-        access_token,
-        profile,
+        accessToken,
     },
 });
 
-export const accountFailed = (error: any, type: string): ActionAccountType => ({
-    type: ACCOUNT_FAILED,
+export const logout = (unAuth?: boolean) => ({
+    type: LOGOUT as typeof LOGOUT,
+    payload: {
+        unAuth,
+    },
+});
+
+export const logoutSuccess = () => ({
+    type: LOGOUT_SUCCESS as typeof LOGOUT_SUCCESS,
+});
+
+export const accountFailed = (error: any, type: string) => ({
+    type: ACCOUNT_FAILED as typeof ACCOUNT_FAILED,
     payload: {
         error: {
             error,
             type,
-        },
+        } as IError,
     },
 });
+
+export type ActionAccountType = ReturnType<
+    typeof login | typeof loginSuccess | typeof logout | typeof logoutSuccess | typeof accountFailed
+>;

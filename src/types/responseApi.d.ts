@@ -1,10 +1,13 @@
 import axios from 'axios';
-import { IProfile } from './account';
+import { Subject } from 'rxjs';
 import { IState } from './state';
+import { IProfile, IAccessToken } from './account';
 
-export interface IDependencies {
+export interface IDependencies<T = any> {
     getState: () => IState;
     httpClient: typeof axios;
+    action: T;
+    cancelled$: Subject<void>;
 }
 
 export interface IError {
@@ -12,28 +15,34 @@ export interface IError {
     type: string;
 }
 
-export interface IErrorValidation {
-    field: string;
-    constraints: string;
+export interface IPhoto {
+    uri: string;
+    name: string;
+    type: 'image/jpeg';
+}
+
+export interface ILink {
+    first: string;
+    last: string;
+    prev: null | string;
+    next: null | string;
+}
+
+export interface IMeta {
+    current_page: number;
+    from: number;
+    last_page: number;
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
 }
 
 export interface IFailedResponse {
     message: string;
-    error_code: string;
-    error_details: IErrorValidation[] | string;
+    errors?: {
+        [field: string]: string[];
+    };
 }
 
-export interface ISuccessLoginData {
-    access_token: string;
-    profile: IProfile;
-}
-
-export interface ISuccessLoginResponse {
-    data: ISuccessLoginData;
-    message: string;
-}
-
-export interface ISuccessGetProfileResponse {
-    data: IProfile;
-    message: string;
-}
+export interface ISuccessLoginResponse extends IAccessToken {}

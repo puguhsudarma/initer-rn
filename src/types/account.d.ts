@@ -2,13 +2,21 @@ import { IError } from './responseApi';
 
 export interface IProfile {
     id: number;
+    first_name: string;
+    last_name: string;
     email: string;
-    full_name: string;
+    mobile: string;
 }
 
-export interface IAccountState {
+export interface IAccessToken {
+    token_type: 'Bearer';
+    expires_in: number;
     access_token: string;
+    refresh_token: string;
+}
+
+export interface IAccountState extends IAccessToken {
     isLoggedIn: boolean;
-    profile: Partial<IProfile>;
+    profile: IProfile;
     error: Partial<IError>;
 }

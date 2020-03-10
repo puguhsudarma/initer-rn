@@ -1,25 +1,24 @@
-import React, { PureComponent } from 'react';
-import { View, StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import color from '../../constants/color';
 import { ISplashScreenReduxProps } from './SplashScreen.Container';
 
-export interface ISplashScreenBaseProps {}
+interface ISplashScreenProps extends ISplashScreenReduxProps {
+    componentId: string;
+}
 
-interface ISplashScreenProps extends ISplashScreenBaseProps, ISplashScreenReduxProps {}
-
-interface ISplashScreenState {}
-
-class SplashScreen extends PureComponent<ISplashScreenProps, ISplashScreenState> {
+class SplashScreen extends React.PureComponent<ISplashScreenProps> {
     render() {
-        return <View style={styles.basic_container_center} />;
+        return <View style={styles.container}></View>;
     }
 }
 
 const styles = StyleSheet.create({
-    basic_container_center: {
+    container: {
         flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: color.TURQUOISE,
     },
 });
 

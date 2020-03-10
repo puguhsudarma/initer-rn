@@ -1,0 +1,38 @@
+stages:
+    - test
+    - build
+    - review
+    - deploy
+
+# todos
+# write test, linting, review
+# for apple?
+
+variables:
+    FOLDER_ARTIFACT: "$CI_PROJECT_NAME-$CI_COMMIT_REF_NAME"
+
+before_script:
+    # create artifacts folder
+    - mkdir $FOLDER_ARTIFACT
+
+build:android:
+    image: reactnativecommunity/react-native-android
+    stage: build
+    script:
+    - echo $STORE_FILE | base64 --decode > ./android/app/autoappcustomer.keystore
+    - yarn install
+    - yarn jetify 
+    - cd ./android
+    - ./gradlew app:assembleRelease --warn
+    - cd ..
+    # rename the android apks from `app-arm64-v8a-release` to `{tag}-customer-arm64-v8a.apk`
+    - find android/app/build/outputs/apk/release -name '*.apk' -exec bash -c 'mv $0 ${0/app\-/$CI_COMMIT_REF_NAME\-customer\-}' {} \;    
+    # move the apks to the artifacts folder
+    - mv android/app/build/outputs/apk/release/*.apk ./$FOLDER_ARTIFACT
+            
+    artifacts:
+        name: $FOLDER_ARTIFACT
+        paths:
+        - $FOLDER_ARTIFACT
+        expire_in: 1 days
+    when: manual
